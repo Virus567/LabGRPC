@@ -1,0 +1,28 @@
+syntax = "proto3";
+option  csharp_namespace = "MainApp";
+package  agentProto;
+
+service AgentProtoService{
+  rpc Auth (AuthRequest) returns (AgentMessage);
+  rpc AddNewLoadedApp (NewRequest) returns (NewResponse);
+}
+
+message  AuthRequest{
+  string login = 1;
+  string  password = 2;
+}
+
+message AgentMessage{
+  int32  id = 1;
+  string login = 2;
+  string password = 3;
+}
+
+message NewRequest{
+  string name = 1;
+  int32 computer = 2;
+  int32 nowAgent = 3;
+}
+message  NewResponse{
+  bool res = 1;
+}
