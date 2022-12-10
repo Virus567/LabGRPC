@@ -4,5 +4,5 @@ namespace WebApplication1.Repositories;
 
 public interface IClientRepository
 {
-    IEnumerable<LoadedApp> GetAllApps();
+    Task<IEnumerable<LoadedApp>> GetAllApps();
 }

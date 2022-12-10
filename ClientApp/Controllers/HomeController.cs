@@ -13,9 +13,9 @@ public class HomeController : Controller
     {
         _clientRepository = clientRepository;
     }
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        throw new NotImplementedException();
+        return View(new LoadedAppViewModel { LoadedApps = await _clientRepository.GetAllApps() });
     }
     
 

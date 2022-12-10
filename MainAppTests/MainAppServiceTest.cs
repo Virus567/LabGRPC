@@ -88,14 +88,14 @@ public class MainAppRepositoriesTest
     }
 
 
-    [TestCase("test", "test", ExpectedResult = true)]
-    [TestCase("test1", "test", ExpectedResult = false)]
-    [TestCase("", "test", ExpectedResult = false)]
-    [TestCase("test", "", ExpectedResult = false)]
-    [TestCase("", "", ExpectedResult = false)]
-    [TestCase(null, "test", ExpectedResult = false)]
-    [TestCase("test", null, ExpectedResult = false)]
-    [TestCase(null, null, ExpectedResult = false)]
+    [TestCase("test", "test", ExpectedResult = false)]
+    [TestCase("test1", "test", ExpectedResult = true)]
+    [TestCase("", "test", ExpectedResult = true)]
+    [TestCase("test", "", ExpectedResult = true)]
+    [TestCase("", "", ExpectedResult = true)]
+    [TestCase(null, "test", ExpectedResult = true)]
+    [TestCase("test", null, ExpectedResult = true)]
+    [TestCase(null, null, ExpectedResult = true)]
     public bool AuthWithErrorData(string login, string password)
     {
         var service = new AgentService(_context);

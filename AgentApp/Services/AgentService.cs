@@ -1,4 +1,5 @@
 ﻿using AgentApp.Repository;
+using Grpc.Net.Client;
 using MainApp;
 
 namespace AgentApp.Services;
@@ -7,11 +8,15 @@ public class AgentService : IAgentRopository
 {
     public async Task<AgentMessage> Auth(AuthRequest request)
     {
-        throw new NotImplementedException();
+        using var channel = GrpcChannel.ForAddress("http://localhost:5134");
+        var client = new AgentProtoService.AgentProtoServiceClient(channel);
+        return await client.AuthAsync((request));
     }
 
     public async Task<NewResponse> AddNewLoadedApp(NewRequest request)
     {
-        throw new NotImplementedException();
+        using var channel = GrpcChannel.ForAddress("http://localhost:5134");
+        var client = new AgentProtoService.AgentProtoServiceClient(channel);
+        return await client.AddNewLoadedAppAsync(request);
     }
 }

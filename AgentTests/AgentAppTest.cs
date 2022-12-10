@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AgentApp;
 using AgentApp.Repository;
 using MainApp;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 
@@ -34,20 +35,35 @@ public class AgentAppTest
 
     [TestCase("  ", "test")]
     [TestCase("test", "  ")]
-    [TestCase(null, "test")]
-    [TestCase("test", null)]
-    [TestCase(null, null)]
-    public async Task AuthWithErrorData(string login, string password)
+    public async Task AuthWithEmptyData(string login, string password)
     {
         var mock = new Mock<IAgentRopository>();
         mock.Setup(s =>
             s.Auth(It.Is<AuthRequest>(
-                r => !string.IsNullOrWhiteSpace(r.Login) || !string.IsNullOrWhiteSpace(r.Password)))).Returns(
+                r => string.IsNullOrWhiteSpace(r.Login) || string.IsNullOrWhiteSpace(r.Password)))).Returns(
             Task.FromResult(new  AgentMessage()
                 {Id = -1, Login = "", Password = ""}));
         var worker = new Worker(mock.Object);
-        var res = await worker.Auth(new AuthRequest{Login = login, Password = password});
+        
+         var res =await worker.Auth(new AuthRequest{ Login = login, Password = password });
+            
         Assert.That(res.Id, Is.EqualTo(-1));
+    }
+    
+    [TestCase(null, "test")]
+    [TestCase("test", null)]
+    [TestCase(null, null)]
+    public async Task AuthWithNullData(string login, string password)
+    {
+        var mock = new Mock<IAgentRopository>();
+        mock.Setup(s =>
+            s.Auth(It.Is<AuthRequest>(
+                r => string.IsNullOrWhiteSpace(r.Login) || string.IsNullOrWhiteSpace(r.Password)))).Returns(
+            Task.FromResult(new  AgentMessage()
+                {Id = -1, Login = "", Password = ""}));
+        var worker = new Worker(mock.Object);
+        AuthRequest? req = null;
+        Assert.Catch<ArgumentNullException>(() => req = new AuthRequest { Login = login, Password = password });
     }
 
     [Test]
@@ -100,8 +116,7 @@ public class AgentAppTest
     
 
     [TestCase("")]
-    [TestCase(null)]
-    public async Task AddNewLoadedAppWithErrorName(string name)
+    public async Task AddNewLoadedAppWithEmptyName(string name)
     {
         var mock = new Mock<IAgentRopository>();
         mock.Setup(s => s.AddNewLoadedApp(It.Is<NewRequest>(r => !string.IsNullOrWhiteSpace(r.Name))))
@@ -110,5 +125,15 @@ public class AgentAppTest
         var res = await worker.AddNewLoadedApp(new NewRequest
             {Computer = 1, NowAgent = 1, Name = name});
         Assert.That(res.Res, Is.False);
+    }
+    [TestCase(null)]
+    public async Task AddNewLoadedAppWithNullName(string name)
+    {
+        var mock = new Mock<IAgentRopository>();
+        mock.Setup(s => s.AddNewLoadedApp(It.Is<NewRequest>(r => !string.IsNullOrWhiteSpace(r.Name))))
+            .Returns(Task.FromResult(new NewResponse {Res = true}));
+        var worker = new Worker(mock.Object);
+        NewRequest request = null;
+        Assert.Catch<ArgumentNullException>(() => request = new NewRequest { Computer = 1, NowAgent = 1, Name = null });
     }
 }

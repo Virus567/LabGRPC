@@ -1,5 +1,6 @@
 using LabDB.Entity;
 using MainApp.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace MainApp.Services;
 
@@ -13,6 +14,6 @@ public class ClientService: IClientService
     }
     public IEnumerable<LoadedApp> GetAllApps()
     {
-        throw new NotImplementedException();
+        return _context.LoadedApps.Include(a=>a.Computer).Include(a=>a.Agent);
     }
 }

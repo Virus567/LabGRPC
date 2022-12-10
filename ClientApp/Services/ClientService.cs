@@ -1,4 +1,5 @@
-﻿using LabDB.Entity;
+﻿using System.Text.Json;
+using LabDB.Entity;
 using WebApplication1.Repositories;
 
 namespace WebApplication1.Services;
@@ -11,8 +12,24 @@ public class ClientService : IClientRepository
     {
         _httpClientFactory = httpClientFactory;
     }
-    public IEnumerable<LoadedApp> GetAllApps()
+    public async Task<IEnumerable<LoadedApp>> GetAllApps()
     {
-        throw new NotImplementedException();
+        var client = _httpClientFactory.CreateClient();
+        try
+        {
+            var responseMessage = await client.GetAsync("http://localhost:5174/client/get");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return JsonSerializer.Deserialize<IEnumerable<LoadedApp>>(await responseMessage.Content
+                    .ReadAsStringAsync())??Enumerable.Empty<LoadedApp>();
+            }
+            return Enumerable.Empty<LoadedApp>();
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e);
+            return Enumerable.Empty<LoadedApp>();
+        }
+        
     }
 }

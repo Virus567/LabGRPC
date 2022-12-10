@@ -13,21 +13,34 @@ public class AgentService : IAgentService
     }
     public bool AddNewLoadedApp(LoadedApp app)
     {
-        throw new NotImplementedException();
+        if (app is null || string.IsNullOrWhiteSpace(app.Name) ||
+            !_context.Computers.Any(c => c.Id == app.ComputerId) ||
+            !_context.Agents.Any(a => a.Id == app.AgentId)) return false;
+        try
+        {
+            _context.Add(app);
+            _context.SaveChanges();
+            return true;
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
     }
 
     public LabDB.Entity.Agent? AuthAgent(string login, string pass)
     {
-        throw new NotImplementedException();
+        return _context.Agents.FirstOrDefault(e => e.Login == login && e.Passsword == pass);
     }
 
     public Agent? GetAgentById(int id)
     {
-        throw new NotImplementedException();
+        return _context.Agents.FirstOrDefault(e => e.Id == id);
     }
 
     public Computer? GetComputerById(int id)
     {
-        throw new NotImplementedException();
+        return _context.Computers.FirstOrDefault(h => h.Id == id);
     }
 }

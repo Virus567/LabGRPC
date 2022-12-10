@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using LabDB.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -26,26 +27,26 @@ public class ClientAppTests
         _testComputer = computer;
     }
     [Test]
-    public void GetLoadedAppSuccess()
+    public async Task GetLoadedAppSuccess()
     {
         var mock = new Mock<IClientRepository>();
-        mock.Setup(s => s.GetAllApps()).Returns(_testComputer.LoadedApps);
+        mock.Setup(s => s.GetAllApps()).Returns(Task.FromResult((IEnumerable<LoadedApp>)_testComputer.LoadedApps));
         var controller = new HomeController(mock.Object);
-        var actionResult = controller.Index();
-        Assert.That(actionResult, Is.TypeOf<LoadedAppViewModel>());
+        var actionResult =await controller.Index();
+        Assert.That(actionResult, Is.TypeOf<ViewResult>());
         var viewResult = (ViewResult)actionResult;
         Assert.That(viewResult.ViewData.Model, Is.TypeOf<LoadedAppViewModel>());
         var model = (LoadedAppViewModel)viewResult.ViewData.Model!;
         Assert.That(model.LoadedApps.Count(), Is.EqualTo(_testComputer.LoadedApps.Count()));
     }
     [Test]
-    public void GetLoadedAppServerError()
+    public async Task GetLoadedAppServerError()
     {
         var mock = new Mock<IClientRepository>();
-        mock.Setup(s => s.GetAllApps()).Returns(new List<LoadedApp>());
+        mock.Setup(s => s.GetAllApps()).Returns(Task.FromResult((IEnumerable<LoadedApp>)new List<LoadedApp>()));
         var controller = new HomeController(mock.Object);
-        var actionResult = controller.Index();
-        Assert.That(actionResult, Is.TypeOf<LoadedAppViewModel>());
+        var actionResult = await controller.Index();
+        Assert.That(actionResult, Is.TypeOf<ViewResult>());
         var viewResult = (ViewResult)actionResult;
         Assert.That(viewResult.ViewData.Model, Is.TypeOf<LoadedAppViewModel>());
         var model = (LoadedAppViewModel)viewResult.ViewData.Model!;

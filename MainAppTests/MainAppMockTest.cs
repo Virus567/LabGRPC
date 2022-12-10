@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LabDB.Entity;
 using MainApp;
@@ -12,14 +13,15 @@ namespace MainAppTests;
 public class MainAppMockTest
 {
     private readonly Computer _testComputer;
+    private readonly Agent _agent;
 
     public MainAppMockTest()
     {
-        var a = new Agent {Id = 1, Login = "Test", Passsword = "Test"};
+        _agent = new Agent {Id = 1, Login = "Test", Passsword = "Test"};
 
         var computer = new Computer() {Id = 1};
-        var ind0 = new LoadedApp("Test1",a, computer);
-        var ind1 = new LoadedApp("Test2",a, computer);
+        var ind0 = new LoadedApp("Test1", _agent, computer);
+        var ind1 = new LoadedApp("Test2", _agent, computer);
         computer.LoadedApps.Add(ind0);
         computer.LoadedApps.Add(ind1);
 
@@ -41,8 +43,10 @@ public class MainAppMockTest
     {
         var mock = new Mock<IAgentService>();
         mock.Setup(r => r.AddNewLoadedApp(It.IsNotNull<LoadedApp>())).Returns(true);
+        mock.Setup(r => r.GetAgentById(It.IsAny<int>())).Returns(_agent);
+        mock.Setup(r => r.GetComputerById(It.IsAny<int>())).Returns(_testComputer);
         var agentController = new AgentController(mock.Object);
-        var res = agentController.AddNewLoadedApp(new NewRequest());
+        var res = agentController.AddNewLoadedApp(new NewRequest {Name = "Приложение 1", Computer = 1, NowAgent = 1});
         Assert.That(res.Res, Is.True);
     }
 
@@ -101,17 +105,27 @@ public class MainAppMockTest
     [TestCase("   ", "test")]
     [TestCase("test", "    ")]
     [TestCase("   ", "    ")]
-    [TestCase(null, "test")]
-    [TestCase("test", null)]
-    [TestCase(null, null)]
-    public void AuthWithErrorData(string login, string password)
+    public void AuthWithEmptyData(string login, string password)
     {
         var mock = new Mock<IAgentService>();
         mock.Setup(r => r.AuthAgent(It.Is<string>(s => !string.IsNullOrWhiteSpace(s)),
                 It.Is<string>(s => !string.IsNullOrWhiteSpace(s))))
             .Returns(new Agent {Id = 1, Login = "Test", Passsword = "Test"});
         var agentController = new AgentController(mock.Object);
-        var res = agentController.Auth(new AuthRequest{Login = login, Password = password});
-        Assert.That(res, Is.Null);
+        var res = agentController.Auth(new AuthRequest {Login = login, Password = password});
+        Assert.That(res.Id, Is.EqualTo(-1));
+    }
+    [TestCase(null, "test")]
+    [TestCase("test", null)]
+    [TestCase(null, null)]
+    public void AuthWithNullData(string login, string password)
+    {
+        var mock = new Mock<IAgentService>();
+        mock.Setup(r => r.AuthAgent(It.Is<string>(s => !string.IsNullOrWhiteSpace(s)),
+                It.Is<string>(s => !string.IsNullOrWhiteSpace(s))))
+            .Returns(new Agent {Id = 1, Login = "Test", Passsword = "Test"});
+        var agentController = new AgentController(mock.Object);
+        Assert.Catch<ArgumentNullException>(() =>
+            agentController.Auth(new AuthRequest {Login = login, Password = password}));
     }
 }

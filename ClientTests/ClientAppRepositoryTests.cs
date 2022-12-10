@@ -15,19 +15,18 @@ namespace ClientTests;
 
 public class ClientAppRepositoryTests
 {
-    private readonly Computer _testComputer;
+    private readonly IEnumerable<LoadedApp> _loadedApps ;
 
     public ClientAppRepositoryTests()
     {
         var a = new Agent { Id = 1, Login = "Test", Passsword = "Test" };
-
+        List<LoadedApp> loadedApps = new List<LoadedApp>();
         var computer = new Computer() { Id = 1 };
         var ind0 = new LoadedApp("Test1", a, computer);
         var ind1 = new LoadedApp("Test2", a, computer);
-        computer.LoadedApps.Add(ind0);
-        computer.LoadedApps.Add(ind1);
-
-        _testComputer = computer;
+        loadedApps.Add(ind0);
+        loadedApps.Add(ind1);
+        _loadedApps = loadedApps;
     }
 
     public class DelegatingHandlerStub : DelegatingHandler
@@ -71,25 +70,25 @@ public class ClientAppRepositoryTests
     }
 
     [Test]
-    public void GetLoadedAppsHttpSuccess()
+    public async Task GetLoadedAppsHttpSuccess()
     {
-        var clientHandlerStub = new DelegatingHandlerStub(_testComputer.LoadedApps);
+        var clientHandlerStub = new DelegatingHandlerStub(_loadedApps);
         var client = new HttpClient(clientHandlerStub);
         var mock = new Mock<IHttpClientFactory>();
         mock.Setup(r => r.CreateClient(It.IsAny<string>())).Returns(client);
         var service = new ClientService(mock.Object);
-        var res = service.GetAllApps();
-        Assert.That(res.Count(), Is.EqualTo(_testComputer.LoadedApps.Count()));
+        var res = await service.GetAllApps();
+        Assert.That(res.Count(), Is.EqualTo(_loadedApps.Count()));
     }
 
     [Test]
-    public void GetLoadedAppsHttpError()
+    public async Task GetLoadedAppsHttpError()
     {
         var client = new HttpClient();
         var mock = new Mock<IHttpClientFactory>();
         mock.Setup(r => r.CreateClient(It.IsAny<string>())).Returns(client);
         var service = new ClientService(mock.Object);
-        var res = service.GetAllApps();
+        var res = await service.GetAllApps();
         Assert.That(res.Count(), Is.EqualTo(0));
     }
 }
