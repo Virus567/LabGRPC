@@ -18,7 +18,7 @@ public class ClientController: ControllerBase
     [HttpGet("get")]
     public IEnumerable<LoadedApp> GetLoadedApps()
     {
-        return _clientService.GetAllApps();
+        throw new NotImplementedException();
     }
 
 }

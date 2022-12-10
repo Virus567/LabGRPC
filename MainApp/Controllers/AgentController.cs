@@ -12,24 +12,19 @@ public class AgentController: AgentProtoService.AgentProtoServiceBase
    {
       _agentService = agentService;
    }
+   public AgentMessage Auth(AuthRequest request)
+   {
+      throw new NotImplementedException();
+   }
 
    public override Task<AgentMessage> Auth(AuthRequest request, ServerCallContext context)
    {
-      var a = _agentService.AuthAgent(request.Login, request.Password);
-      if (a is null) return Task.FromResult(new AgentMessage());
-      return Task.FromResult(new AgentMessage
-      {
-         Id = a.Id, Login = a.Login, Password = a.Passsword
-      });
+      return Task.FromResult(Auth(request));
    }
 
-   public override Task<NewResponse> AddNewLoadedApp(NewRequest request, ServerCallContext context)
+   public NewResponse AddNewLoadedApp(NewRequest request)
    {
-      var r = new LoadedApp(request.Name, _agentService.GetAgentById(request.NowAgent), _agentService.GetComputerById(request.Computer));
-      return Task.FromResult(new NewResponse
-      {
-         Res = _agentService.AddNewLoadedApp(r)
-      });
+      throw new NotImplementedException();
    }
 
 }

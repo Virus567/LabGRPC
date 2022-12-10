@@ -6,6 +6,7 @@ public class LoadedApp
     public string Name { get; set; }
     public DateTime DateTime { get; set; }
     public Agent Agent { get; set; }
+    public int AgentId { get; set; }
     public Computer Computer { get; set; }
     public int ComputerId { get; set; }
 
@@ -22,6 +23,7 @@ public class LoadedApp
         Name = name;
         DateTime = DateTime.Now;
         Agent = agent;
+        AgentId = agent.Id;
         Computer = computer;
         ComputerId = computer.Id;
     }
