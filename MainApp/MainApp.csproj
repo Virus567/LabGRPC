@@ -7,8 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\agent.proto" GrpcServices="AgentProtoService" />
+        <Protobuf Include="..\Protos\agent.proto" GrpcServices="AgentProtoService" />
     </ItemGroup>
+    
 
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />

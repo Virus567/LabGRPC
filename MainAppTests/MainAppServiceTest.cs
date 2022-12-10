@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System.Linq;
 
-namespace Tests.MainApp;
+namespace MainAppTests;
 
 public class MainAppRepositoriesTest
 {

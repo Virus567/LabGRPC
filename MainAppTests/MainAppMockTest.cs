@@ -7,7 +7,7 @@ using MainApp.Interfaces;
 using Moq;
 using NUnit.Framework;
 
-namespace Tests.MainApp;
+namespace MainAppTests;
 
 public class MainAppMockTest
 {
