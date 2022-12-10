@@ -43,7 +43,7 @@ public class MainAppMockTest
         mock.Setup(r => r.AddNewLoadedApp(It.IsNotNull<LoadedApp>())).Returns(true);
         var agentController = new AgentController(mock.Object);
         var res = agentController.AddNewLoadedApp(new NewRequest());
-        Assert.That(res, Is.True);
+        Assert.That(res.Res, Is.True);
     }
 
     [Test]
@@ -53,7 +53,7 @@ public class MainAppMockTest
         mock.Setup(r => r.AddNewLoadedApp(It.IsNotNull<LoadedApp>())).Returns(true);
         var agentController = new AgentController(mock.Object);
         var res = agentController.AddNewLoadedApp(null);
-        Assert.That(res, Is.False);
+        Assert.That(res.Res, Is.False);
     }
 
     [Test]
@@ -63,7 +63,7 @@ public class MainAppMockTest
         mock.Setup(r => r.AddNewLoadedApp(It.Is<LoadedApp>(i => i.ComputerId > 0))).Returns(true);
         var agentController = new AgentController(mock.Object);
         var res = agentController.AddNewLoadedApp(new NewRequest{Computer = -1});
-        Assert.That(res, Is.False);
+        Assert.That(res.Res, Is.False);
     }
 
     [Test]
@@ -73,7 +73,7 @@ public class MainAppMockTest
         mock.Setup(r => r.AddNewLoadedApp(It.Is<LoadedApp>(i => i.AgentId> 0))).Returns(true);
         var agentController = new AgentController(mock.Object);
         var res = agentController.AddNewLoadedApp(new NewRequest {NowAgent = -1});
-        Assert.That(res, Is.False);
+        Assert.That(res.Res, Is.False);
     }
 
     [Test]
@@ -83,7 +83,7 @@ public class MainAppMockTest
         mock.Setup(r => r.AddNewLoadedApp(It.Is<LoadedApp>(i => i.Name !=""))).Returns(true);
         var agentController = new AgentController(mock.Object);
         var res = agentController.AddNewLoadedApp(new NewRequest {Name = ""});
-        Assert.That(res, Is.False);
+        Assert.That(res.Res, Is.False);
     }
     
 

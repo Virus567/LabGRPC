@@ -5,6 +5,12 @@ namespace MainApp.Services;
 
 public class AgentService : IAgentService
 {
+    private ApplicationContext _context;
+
+    public AgentService(ApplicationContext context)
+    {
+        _context = context;
+    }
     public bool AddNewLoadedApp(LoadedApp app)
     {
         throw new NotImplementedException();
