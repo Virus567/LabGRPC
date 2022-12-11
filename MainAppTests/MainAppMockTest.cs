@@ -17,7 +17,7 @@ public class MainAppMockTest
 
     public MainAppMockTest()
     {
-        _agent = new Agent {Id = 1, Login = "Test", Passsword = "Test"};
+        _agent = new Agent {Id = 1, Login = "Test", Password = "Test"};
 
         var computer = new Computer() {Id = 1};
         var ind0 = new LoadedApp("Test1", _agent, computer);
@@ -96,7 +96,7 @@ public class MainAppMockTest
     {
         var mock = new Mock<IAgentService>();
         mock.Setup(r => r.AuthAgent(It.IsAny<string>(), It.IsAny<string>()))
-            .Returns(new Agent {Id = 1, Login = "Test", Passsword = "Test"});
+            .Returns(new Agent {Id = 1, Login = "Test", Password = "Test"});
         var agentController = new AgentController(mock.Object);
         var res = agentController.Auth(new AuthRequest{Login = "Test", Password = "Test"});
         Assert.That(res, Is.Not.Null);
@@ -110,7 +110,7 @@ public class MainAppMockTest
         var mock = new Mock<IAgentService>();
         mock.Setup(r => r.AuthAgent(It.Is<string>(s => !string.IsNullOrWhiteSpace(s)),
                 It.Is<string>(s => !string.IsNullOrWhiteSpace(s))))
-            .Returns(new Agent {Id = 1, Login = "Test", Passsword = "Test"});
+            .Returns(new Agent {Id = 1, Login = "Test", Password = "Test"});
         var agentController = new AgentController(mock.Object);
         var res = agentController.Auth(new AuthRequest {Login = login, Password = password});
         Assert.That(res.Id, Is.EqualTo(-1));
@@ -123,7 +123,7 @@ public class MainAppMockTest
         var mock = new Mock<IAgentService>();
         mock.Setup(r => r.AuthAgent(It.Is<string>(s => !string.IsNullOrWhiteSpace(s)),
                 It.Is<string>(s => !string.IsNullOrWhiteSpace(s))))
-            .Returns(new Agent {Id = 1, Login = "Test", Passsword = "Test"});
+            .Returns(new Agent {Id = 1, Login = "Test", Password = "Test"});
         var agentController = new AgentController(mock.Object);
         Assert.Catch<ArgumentNullException>(() =>
             agentController.Auth(new AuthRequest {Login = login, Password = password}));

@@ -17,14 +17,14 @@ public class MainAppRepositoriesTest
     {
         var options = new DbContextOptionsBuilder<ApplicationContext>()
             .UseInMemoryDatabase($"ContextDb_{DateTime.Now.ToFileTimeUtc()}").Options;
-        _context = new ApplicationContext(options);
+        _context = new ApplicationContext(options,true);
         FillDb();
     }
 
     private void FillDb()
     {
         var testComputer = new Computer();
-        var agent = new Agent {Id = 1, Login = "test", Passsword = "test"};
+        var agent = new Agent {Id = 1, Login = "test", Password = "test"};
         _context.Agents.Add(agent);
         var ind0 = new LoadedApp("Приложение1", agent,testComputer);
         var ind1 = new LoadedApp("Приложение2", agent, testComputer);

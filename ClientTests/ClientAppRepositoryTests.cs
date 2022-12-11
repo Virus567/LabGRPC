@@ -19,7 +19,7 @@ public class ClientAppRepositoryTests
 
     public ClientAppRepositoryTests()
     {
-        var a = new Agent { Id = 1, Login = "Test", Passsword = "Test" };
+        var a = new Agent { Id = 1, Login = "Test", Password = "Test" };
         List<LoadedApp> loadedApps = new List<LoadedApp>();
         var computer = new Computer() { Id = 1 };
         var ind0 = new LoadedApp("Test1", a, computer);

@@ -31,16 +31,19 @@ public class AgentService : IAgentService
 
     public LabDB.Entity.Agent? AuthAgent(string login, string pass)
     {
-        return _context.Agents.FirstOrDefault(e => e.Login == login && e.Passsword == pass);
+        if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(pass)) return null;
+        return _context.Agents.FirstOrDefault(e => e.Login == login && e.Password == pass);
     }
 
     public Agent? GetAgentById(int id)
     {
+        if (id <= 0) return null;
         return _context.Agents.FirstOrDefault(e => e.Id == id);
     }
 
     public Computer? GetComputerById(int id)
     {
+        if (id <= 0) return null;
         return _context.Computers.FirstOrDefault(h => h.Id == id);
     }
 }

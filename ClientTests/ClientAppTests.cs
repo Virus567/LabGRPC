@@ -16,7 +16,7 @@ public class ClientAppTests
     private readonly Computer _testComputer;
     public ClientAppTests()
     {
-        var a = new Agent {Id = 1, Login = "Test", Passsword = "Test"};
+        var a = new Agent {Id = 1, Login = "Test", Password = "Test"};
 
         var computer = new Computer() {Id = 1};
         var ind0 = new LoadedApp("Test1",a, computer);

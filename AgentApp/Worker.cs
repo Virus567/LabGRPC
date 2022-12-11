@@ -19,9 +19,9 @@ public class Worker : BackgroundService
     
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var res = await Auth(new AuthRequest { Login = "Login", Password = "Password" });
+        var res = await Auth(new AuthRequest { Login = "Test", Password = "Test" });
         if(res.Id ==-1)return;
-        _agent = new Agent { Id = res.Id, Login = res.Login, Passsword = res.Password };
+        _agent = new Agent { Id = res.Id, Login = res.Login, Password = res.Password };
         while (!stoppingToken.IsCancellationRequested)
         {
             try

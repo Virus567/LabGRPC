@@ -19,7 +19,7 @@ public class AgentController: AgentProtoService.AgentProtoServiceBase
       var agent = _agentService.AuthAgent(request.Login, request.Password);
       return agent is null
          ? new AgentMessage {Id = -1, Login = "", Password = ""}
-         : new AgentMessage() {Id = agent.Id, Login = agent.Login, Password = agent.Passsword};
+         : new AgentMessage() {Id = agent.Id, Login = agent.Login, Password = agent.Password};
    }
 
    public override Task<AgentMessage> Auth(AuthRequest request, ServerCallContext context)

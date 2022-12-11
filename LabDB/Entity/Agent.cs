@@ -4,17 +4,20 @@ public class Agent
 {
     public int Id { get; set; }
     public string Login { get; set; }
-    public string Passsword { get; set; }
+    public string Password { get; set; }
+    public List<LoadedApp> LoadedApps { get; set; }
 
     public Agent()
     {
         Login = string.Empty;
-        Passsword = string.Empty;
+        Password = string.Empty;
+        LoadedApps = new List<LoadedApp>();
     }
 
-    public Agent(string login, string passsword)
+    public Agent(string login, string password)
     {
         Login = login;
-        Passsword = passsword;
+        Password = password;
+        LoadedApps = new List<LoadedApp>();
     }
 }
