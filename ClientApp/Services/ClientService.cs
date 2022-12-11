@@ -17,7 +17,7 @@ public class ClientService : IClientRepository
         var client = _httpClientFactory.CreateClient();
         try
         {
-            var responseMessage = await client.GetAsync("http://localhost:5174/client/get");
+            var responseMessage = await client.GetAsync("http://localhost:5173/client/get");
             if (responseMessage.IsSuccessStatusCode)
             {
                 return JsonSerializer.Deserialize<IEnumerable<LoadedApp>>(await responseMessage.Content

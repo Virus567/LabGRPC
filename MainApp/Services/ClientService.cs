@@ -14,6 +14,13 @@ public class ClientService: IClientService
     }
     public IEnumerable<LoadedApp> GetAllApps()
     {
-        return _context.LoadedApps.Include(a=>a.Computer).Include(a=>a.Agent);
+        var loadedApps = _context.LoadedApps.Include(a=>a.Computer).ToList();
+        loadedApps = loadedApps.Select(l => 
+        { 
+            l.Computer = null;
+            return l;
+        }).ToList();
+        return loadedApps;
+        
     }
 }

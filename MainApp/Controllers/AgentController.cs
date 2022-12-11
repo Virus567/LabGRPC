@@ -43,4 +43,8 @@ public class AgentController: AgentProtoService.AgentProtoServiceBase
       return new NewResponse {Res = res};
    }
 
+   public override Task<NewResponse> AddNewLoadedApp(NewRequest request, ServerCallContext context)
+   {
+      return Task.FromResult(AddNewLoadedApp(request));
+   }
 }

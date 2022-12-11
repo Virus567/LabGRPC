@@ -31,10 +31,10 @@ public class ApplicationContext : DbContext
         
         var inds = new List<object>(new[]
         {
-            new {Id = 1, AgentId = 1, ComputerId = 1,  Name = "Приложение 1", DateTime = DateTime.Now},
-            new {Id = 2, AgentId = 1, ComputerId = 1,  Name = "Приложение 2", DateTime = DateTime.Now},
-            new {Id = 3, AgentId = 1, ComputerId = 1,  Name = "Приложение 3", DateTime = DateTime.Now},
-            new {Id = 4, AgentId = 1, ComputerId = 1,  Name = "Приложение 4", DateTime = DateTime.Now},
+            new {Id = 1, AgentId = 1, ComputerId = 1,  Name = "3D max", DateTime = DateTime.Now},
+            new {Id = 2, AgentId = 1, ComputerId = 1,  Name = "AutoCAD", DateTime = DateTime.Now},
+            new {Id = 3, AgentId = 1, ComputerId = 1,  Name = "Проводник", DateTime = DateTime.Now},
+            new {Id = 4, AgentId = 1, ComputerId = 1,  Name = "Visual Studio 2022", DateTime = DateTime.Now},
         });
         
         modelBuilder.Entity<Agent>().HasData(agent);

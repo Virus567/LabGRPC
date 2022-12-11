@@ -9,7 +9,7 @@ public class Worker : BackgroundService
 {
     private readonly IAgentRopository _agentRopository;
 
-    private static readonly List<string> _names = new (new[] {"Приложение 1", "Приложение 2", "Приложение 3", "Прилжение 4", "Приожение 5" });
+    private static readonly List<string> _names = new (new[] {"Word", "Photoshop", "Excel", "Google", "Сапёр" });
     private Agent? _agent;
 
     public Worker(IAgentRopository agentRopository)
@@ -28,7 +28,7 @@ public class Worker : BackgroundService
             {
                 var req = new NewRequest
                 {
-                    Name = _names.Single(), Computer = new Random().Next(-5, 10), NowAgent = _agent.Id
+                    Name = _names[new Random().Next(0,_names.Count)], Computer = new Random().Next(-5, 10), NowAgent = _agent.Id
                 };
                 var resp = await AddNewLoadedApp(req);
                 if (resp.Res)

@@ -1,8 +1,26 @@
-﻿@{
+﻿@model LoadedAppViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <table>
+        <thead>
+        <tr>
+            <td>Номер</td>
+            <td>Название</td>
+            <td>Время</td>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var i in Model.LoadedApps)
+                {
+                    <tr>
+                        <td>@i.Id</td>
+                        <td>@i.Name запущено</td>
+                        <td>@i.DateTime.ToString("f")</td>
+                    </tr>
+                }
+        </tbody>
+    </table>
 </div>

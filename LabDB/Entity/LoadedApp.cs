@@ -1,14 +1,16 @@
-﻿namespace LabDB.Entity;
+﻿using System.Text.Json.Serialization;
+
+namespace LabDB.Entity;
 
 public class LoadedApp
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public DateTime DateTime { get; set; }
+    [JsonPropertyName("id")]public int Id { get; set; }
+    [JsonPropertyName("name")]public string Name { get; set; }
+    [JsonPropertyName("dateTime")]public DateTime DateTime { get; set; }
     public Agent Agent { get; set; }
-    public int AgentId { get; set; }
+    [JsonPropertyName("agentId")]public int AgentId { get; set; }
     public Computer Computer { get; set; }
-    public int ComputerId { get; set; }
+    [JsonPropertyName("computerId")]public int ComputerId { get; set; }
 
     public LoadedApp()
     {

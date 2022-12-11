@@ -1,11 +1,13 @@
-﻿namespace LabDB.Entity;
+﻿using System.Text.Json.Serialization;
+
+namespace LabDB.Entity;
 
 public class Agent
 {
-    public int Id { get; set; }
-    public string Login { get; set; }
-    public string Password { get; set; }
-    public List<LoadedApp> LoadedApps { get; set; }
+    [JsonPropertyName("id")]public int Id { get; set; }
+    [JsonPropertyName("login")]public string Login { get; set; }
+    [JsonPropertyName("password")]public string Password { get; set; }
+    [JsonPropertyName("loadedApps")]public List<LoadedApp> LoadedApps { get; set; }
 
     public Agent()
     {

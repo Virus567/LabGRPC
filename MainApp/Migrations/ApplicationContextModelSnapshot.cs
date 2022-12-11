@@ -94,32 +94,32 @@ namespace MainApp.Migrations
                             Id = 1,
                             AgentId = 1,
                             ComputerId = 1,
-                            DateTime = new DateTime(2022, 12, 11, 13, 30, 40, 218, DateTimeKind.Local).AddTicks(8194),
-                            Name = "Приложение 1"
+                            DateTime = new DateTime(2022, 12, 11, 15, 44, 52, 407, DateTimeKind.Local).AddTicks(2261),
+                            Name = "3D max"
                         },
                         new
                         {
                             Id = 2,
                             AgentId = 1,
                             ComputerId = 1,
-                            DateTime = new DateTime(2022, 12, 11, 13, 30, 40, 218, DateTimeKind.Local).AddTicks(8210),
-                            Name = "Приложение 2"
+                            DateTime = new DateTime(2022, 12, 11, 15, 44, 52, 407, DateTimeKind.Local).AddTicks(2275),
+                            Name = "AutoCAD"
                         },
                         new
                         {
                             Id = 3,
                             AgentId = 1,
                             ComputerId = 1,
-                            DateTime = new DateTime(2022, 12, 11, 13, 30, 40, 218, DateTimeKind.Local).AddTicks(8211),
-                            Name = "Приложение 3"
+                            DateTime = new DateTime(2022, 12, 11, 15, 44, 52, 407, DateTimeKind.Local).AddTicks(2277),
+                            Name = "Проводник"
                         },
                         new
                         {
                             Id = 4,
                             AgentId = 1,
                             ComputerId = 1,
-                            DateTime = new DateTime(2022, 12, 11, 13, 30, 40, 218, DateTimeKind.Local).AddTicks(8212),
-                            Name = "Приложение 4"
+                            DateTime = new DateTime(2022, 12, 11, 15, 44, 52, 407, DateTimeKind.Local).AddTicks(2279),
+                            Name = "Visual Studio 2022"
                         });
                 });
 
